@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styles from "../styles.module.css"
 
 
@@ -16,13 +18,22 @@ const ImageGalleryItem = ({modalData, onCloseModal, id, tags, webformatURL, larg
             }>
             <img src={webformatURL}
                 alt={tags}
-                id={id}
+                key={id}
                 className={styles.imageGalleryItemImage}
                 onClick={onCloseModal}
             />
-            {/* {modalData({ largeImageURL, tags })} */}
+            
         </li>
     )
 }
 
 export default ImageGalleryItem
+
+ImageGalleryItem.propTypes = {
+    modalData: PropTypes.func.isRequired,
+    onCloseModal: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
+    tags: PropTypes.string.isRequired,
+    webformatURL: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+}

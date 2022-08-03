@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from "../styles.module.css"
 
 const LoadMore = ({loadMore}) => {
@@ -9,3 +10,7 @@ const LoadMore = ({loadMore}) => {
 }
 
 export default LoadMore
+
+LoadMore.propTypes = {
+    loadMore: PropTypes.func.isRequired,
+}
