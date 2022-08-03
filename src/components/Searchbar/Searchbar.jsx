@@ -42,9 +42,9 @@ class Searchbar extends React.Component {
                     autoComplete="off"
                     autoFocus
                     placeholder="Search images and photos"
-                        onChange={this.onInputChange}
-                        value = {this.state.request}
-                    
+                    onChange={this.onInputChange}
+                    value = {this.state.request}
+                    autofocus
                     />
                 </form>
             </header>
