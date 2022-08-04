@@ -1,9 +1,9 @@
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem"
-import LoadMore from "components/LoadMore/LoadMore"
+
 import styles from "../styles.module.css"
 import PropTypes from 'prop-types';
 
-const ImageGallery = ({modalData, images,loadMore, onCloseModal, status}) => {
+const ImageGallery = ({modalData, images, onCloseModal}) => {
     return (
         <div className={styles.imageGalleryWrapper}>
             <ul className={styles.imageGallery}>
@@ -19,7 +19,6 @@ const ImageGallery = ({modalData, images,loadMore, onCloseModal, status}) => {
                 />
             )}
             </ul>
-            {status === "resolved" && <LoadMore loadMore={loadMore} />}
         </div>
         
     )
@@ -36,7 +35,5 @@ ImageGallery.propTypes = {
         webformatURL: PropTypes.string.isRequired,
         largeImageURL: PropTypes.string.isRequired,   
     })),
-    loadMore: PropTypes.func.isRequired,
     onCloseModal: PropTypes.func.isRequired,
-    status:PropTypes.string.isRequired,
 }

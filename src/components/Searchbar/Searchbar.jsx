@@ -11,7 +11,6 @@ class Searchbar extends React.Component {
     }
 
     onInputChange = e => {
-       
         this.setState({ request: e.currentTarget.value });
     }
 
@@ -20,10 +19,7 @@ class Searchbar extends React.Component {
         if (this.state.request === "") {
             return alert("Enter request")
         }
-        this.props.onRequestSubmit(this.state.request.toLocaleLowerCase());
-
-        this.setState({request: ""})
-        
+        this.props.onRequestSubmit(this.state.request.toLocaleLowerCase());        
     }
 
     render() {

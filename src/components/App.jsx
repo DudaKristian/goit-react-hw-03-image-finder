@@ -1,7 +1,8 @@
 import React from "react";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Searchbar from "./Searchbar/Searchbar";
-import Modal from './ImageGalleryItem/Modal'
+import Modal from './Modal/Modal'
+import LoadMore from "components/LoadMore/LoadMore"
 import KEY from "servise/KEY";
 import errorImg from "../images/errorImg.jpg"
 
@@ -19,13 +20,14 @@ class App extends React.Component {
     tags: '',
     status: "idle",
     pending: null,
+    total: "",
+    error: null
   }
 
   async componentDidUpdate(prevProps, prevState) {
     const state = this.state;
       
       if (prevState.request !== state.request || prevState.page !== state.page) {
-      
         try {
           this.setState({ pending: true })
           await fetch(`https://pixabay.com/api/?q=${state.request}&page=${state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`)
@@ -35,23 +37,25 @@ class App extends React.Component {
                 ({ id, tags, webformatURL, largeImageURL }));
                 
               if (data.hits.length === 0) {
-                this.setState({ status: "rejected" })
+                this.setState({ status: "rejected", error: true})
               }
               else {
                 this.setState(prevState => ({
                   image: [...prevState.image, ...array],
                   status: "resolved",
-                  pending: false
+                  pending: false,
+                  total: data.total
                 }));
               }
             })
         } catch (error) {
           console.log(error)
-        }
+        } 
     }
-}
+  }
   onRequestSubmit = request => {
-    this.setState({ request, page: 1, pending: false, error: false, image:[]})
+    this.state.request !== request &&
+    this.setState({ request, page: 1, pending: false, error: false, image: [] })
   }
   onLoadMore = e => {
     e.preventDefault()
@@ -100,10 +104,10 @@ class App extends React.Component {
         {state.status === "rejected" &&
           <div className={styles.loader}>
             <img src={errorImg} alt="Error" width="800" height="800" />
-          </div>
+          </div> 
         }
 
-        {state.pending &&
+        {state.pending && !state.error &&
           <LineWave
             height="100"
             width="100"
@@ -117,6 +121,8 @@ class App extends React.Component {
             lastLineColor="" 
             />
         }
+        {state.status === "resolved" && state.image.length !== state.total &&
+          <LoadMore loadMore={this.onLoadMore} /> } 
       </div>
     );
   };
